@@ -1,0 +1,30 @@
+name: C++ Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up CMake
+      run: sudo apt-get update && sudo apt-get install -y cmake g++
+
+    - name: Create build directory
+      run: mkdir -p build
+
+    - name: Configure project
+      run: cmake -S . -B build
+
+    - name: Build project
+      run: cmake --build build
+
+    - name: Run SharedQueueApp
+      run: ./build/SharedQueueApp  -i 60
